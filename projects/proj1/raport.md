@@ -2,7 +2,7 @@
 
 Na wykresach podano mediany czasów wykonania. Badano pliki 100 MiB (główne pomiary) i 32 MiB (różne M i K w pipeline). Wersje bazowe i poprawione dawały zgodne wyniki.
 
-## 1. Latencja - losowy odczyt
+### Latencja - losowy odczyt
 
 ![Czas wykonania w zależności od M i liczby wątków przy zimnym cache](wykresy/latency_cold.png)
 
@@ -10,7 +10,7 @@ Przy zimnym cache zwiększanie liczby wątków wyraźnie skracało czas wykonani
 
 Więcej wątków nie oznacza mniejszej latencji pojedynczego `pread()` - może jedynie skrócić łączny czas realizacji wielu odczytów. Tego pierwszego nie mierzono bezpośrednio. File cache ogranicza potrzebę odczytu z dysku: dla bazowego programu i M = 4 KiB czas wynosił **0,174 s** przy ciepłym cache i **1,853 s** przy zimnym.
 
-## 2. Przepustowość - `mmap()`
+### Przepustowość - mechanizm zero-copy
 
 ![Porównanie read() i mmap() dla różnych M przy ciepłym cache](wykresy/throughput_warm.png)
 
@@ -18,7 +18,7 @@ Największą korzyść z `mmap()` otrzymano dla **M = 512 B**: czas spadł z **0
 
 Przy zimnym cache dla M = 64 KiB czasy obu implementacji wzrosły do około **0,24 s**. Cache poprawia więc wydajność obu sposobów odczytu. Są to pomiary czasu całego programu, a nie opóźnienia pojedynczego dostępu do danych.
 
-## 3. Pipelining - przeplot I/O i obliczeń
+### Przeplot obliczeń oraz operacji IO - pipelining
 
 ![Czas pipeline w zależności od M i K](wykresy/pipeline_grid_src.png)
 
